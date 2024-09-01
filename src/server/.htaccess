@@ -1,0 +1,32 @@
+# Omit .php extension
+RewriteEngine On
+
+# Deny access to .env, .htaccess, .git for security
+RewriteCond %{REQUEST_URI} !^.*(\.env|\.htaccess|\.git) [NC]
+
+# Handle access via /upload and /id
+RewriteRule ^upload$ upload.php [L]
+RewriteRule ^([0-9]+)$ download.php?id=$1 [L]
+
+# Append .php if file does not exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Custom 404 page
+ErrorDocument 404 /404.php
+
+# Redirect any other access to 404 page
+RewriteCond %{REQUEST_URI} !^/404\.php$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /404.php [L]
+
+# Disable server signature
+ServerSignature Off
+
+# Disable directory browsing
+Options -Indexes
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set Referrer-Policy "same-origin"

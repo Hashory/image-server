@@ -1,0 +1,10 @@
+{
+	"deno.enable": true,
+	"deno.config": "deno.json",
+	"[json][jsonc][javascript][typescript]": {
+		"editor.defaultFormatter": "denoland.vscode-deno"
+	},
+	"[php]": {
+		"editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+	}
+}

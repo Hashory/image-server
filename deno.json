@@ -1,0 +1,9 @@
+{
+	"tasks": {
+		"test": "deno test --allow-read=test --allow-net=:8080"
+	},
+	"fmt": {
+		"useTabs": true
+	},
+	"lock": false
+}

@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-apache
+    volumes:
+      - ./src/server:/var/www/html
+    ports:
+      - "8080:80"
+    environment:
+      MYSQL_HOST: mysql-db
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    depends_on:
+      - db
+  
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./src/sql/init.sql:/docker-entrypoint-initdb.d/init.sql # init.sql will be executed on container start
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:
